@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhận diện Món ăn 🍲</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Nhận diện Phở, Cơm Tấm, Bún</h1>
+        <p>Tải ảnh của bạn lên để xem AI dự đoán đây là món gì!</p>
+
+        <form id="upload-form">
+            <input type="file" id="image-input" accept="image/*">
+            <button type="submit">Dự đoán</button>
+        </form>
+
+        <div id="result-container">
+            <div id="image-preview"></div>
+            <div id="result-text">
+                </div>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>

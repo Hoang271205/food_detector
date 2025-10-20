@@ -1,0 +1,13 @@
+# Môi trường ảo (QUAN TRỌNG NHẤT)
+ven/
+venv/
+
+# Thư mục cache của Python
+__pycache__/
+*.pyc
+
+# File rác của macOS
+.DS_Store
+
+# (Tùy chọn) Thư mục dataset nếu quá lớn
+# dataset_3_mon/
