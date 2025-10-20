@@ -1,114 +1,130 @@
-# 🤖 Báo cáo Giữa kỳ: Nhận diện Món ăn Việt Nam (Phở, Bún, Cơm Tấm)
+# 🍲 Vietnamese Food Classification (Pho, Com Tam, Bun)
 
-Đây là dự án AI cho bài tập giữa kỳ, mục tiêu là xây dựng một mô hình Deep Learning có khả năng phân loại 3 món ăn phổ biến của Việt Nam: Phở, Bún, và Cơm Tấm.
+This project is a deep learning image classification system built to recognize three traditional Vietnamese dishes:
+- **Phở**
+- **Cơm Tấm**
+- **Bún**
 
-Dự án bao gồm một mô hình đã huấn luyện (sử dụng Transfer Learning với **MobileNetV2**) và một ứng dụng web (sử dụng **Flask**) để demo khả năng dự đoán của mô hình.
+The trained model is deployed as a **Flask web app**, allowing users to upload an image and receive a prediction of the dish name along with a confidence score.
 
----
-
-## Công nghệ sử dụng
-
-* **Ngôn ngữ:** Python 3.12
-* **Framework AI:** TensorFlow (cụ thể là `tensorflow-macos` và `tensorflow-metal` để tối ưu cho M1)
-* **Backend Web:** Flask
-* **Frontend Web:** HTML, CSS, JavaScript
-* **Thư viện hỗ trợ:** Pillow, Numpy
+This project uses the [Vietnamese Foods](https://www.kaggle.com/datasets/quandang/vietnamese-foods) dataset from Kaggle.
+> **NOTE**: This project only used data for `pho`, `com_tam`, and `bun`. The `bun` class was created by merging three separate categories (`bun bo hue`, `bun cha`, `bun rieu`).
 
 ---
 
-## 📂 Cấu trúc Thư mục
+## 📁 Project Structure
 
-```
-FoodAIP/
-├── dataset_3_mon/     # Dữ liệu ảnh thô (đã chia 3-lớp)
+```text
+food_detect/
+├── README.md
+│
+├── dataset_3_mon/
+│   ├── bun/
+│   ├── com_tam/
+│   └── pho/
+│
 ├── model/
-│   └── food_classifier_model.keras  # Mô hình đã huấn luyện
-├── static/            # CSS và JS cho giao diện
+│   └── food_classifier_model.keras
+│
+├── static/
 │   ├── style.css
 │   └── script.js
+│
 ├── templates/
-│   └── index.html     # Giao diện web
-├── ven
-├── venv               # Môi trường máy ảo venv
-├── app.py             # File chạy web server (Flask)
-├── train.py           # File huấn luyện mô hình
-└── README.md          # File hướng dẫn
+│   └── index.html
+│
+├── app.py             # Flask Server
+├── train.py           # Model Training Script
+└── requirements.txt   # Required libraries
 ```
 
 ---
 
-## 🚀 Hướng dẫn Cài đặt và Chạy dự án
+## 🧠 Model Information
+* **Architecture**: MobileNetV2 (using Transfer Learning)
+* **Training Dataset**: Custom 3-class dataset (Pho, Com Tam, Bun)
+* **Input Size**: 224 x 224 pixels
+* **Framework**: TensorFlow / Keras
+* **Output**: 3-class Softmax
 
-Dự án này được phát triển và thử nghiệm trên môi trường **macOS (Apple M1)**.
-
-### 1. Clone Repository
-
+The trained model file is stored at:
 ```bash
-git clone [URL-repository-cua-ban]
-cd [Ten-thu-muc-du-an]
+model/food_classifier_model.keras
 ```
 
-### 2. Tạo và Kích hoạt Môi trường Ảo
+---
+
+## 🧾 File Descriptions
+| File | Description |
+| :--- | :--- |
+| `train.py` | Python script to load data, train the model, and save it. |
+| `app.py` | The main Flask server script that handles image uploads and prediction API. |
+| `templates/index.html` | The web interface (frontend) for user image uploads. |
+| `static/style.css` | CSS for styling the web interface. |
+| `static/script.js` | JavaScript to handle form submission and fetch API results. |
+| `model/` | Directory containing the trained `.keras` model file. |
+| `dataset_3_mon/` | Directory containing the processed image data (3 classes). |
+| `requirements.txt` | A list of all Python libraries needed to run the project. |
+
+---
+
+## 🚀 Setup and Running the Project
+
+This project was developed and tested on a **macOS (Apple M1)** environment.
+
+### 1. Clone the Repository
 
 ```bash
-# Tạo môi trường ảo (ví dụ tên là 'venv')
-python3 -m venv venv
-
-# Kích hoạt môi trường ảo
-source venv/bin/activate
+git clone https://github.com/Hoang271205/food_detector
+cd food_detect
 ```
 
-### 3. Cài đặt Thư viện
+### 2. Create and Activate Virtual Environment
 
-Sử dụng file `requirements.txt` để cài đặt tất cả các thư viện cần thiết.
+```bash
+# Create a virtual environment (e.g., named 'ven')
+python3 -m venv ven
+
+# Activate the virtual environment
+source ven/bin/activate
+```
+
+### 3. Install Dependencies
+
+Use the `requirements.txt` file to install all necessary libraries.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. (Rất quan trọng) Sửa lỗi SSL trên macOS
+### 4. (Very Important) Fix SSL Error on macOS
 
-Nếu đây là lần đầu chạy dự án Python (hoặc dùng Python 3.12+) trên máy, bạn có thể gặp lỗi `[SSL: CERTIFICATE_VERIFY_FAILED]` khi code cố tải mô hình MobileNetV2.
+If you encounter an `[SSL: CERTIFICATE_VERIFY_FAILED]` error when running `train.py` (due to Python not finding security certificates), you must run the following command (only once):
 
-Để khắc phục, vui lòng chạy file sau (chỉ cần chạy 1 lần duy nhất):
-
-1.  Mở **Finder** -> **Applications** -> **Python 3.12** (hoặc phiên bản Python bạn đang dùng).
-2.  Nhấp đúp vào file **`Install Certificates.command`**.
+1.  Open **Finder** -> **Applications** -> **Python 3.12** (or your Python version).
+2.  Double-click the **`Install Certificates.command`** file.
 
 ---
 
-## 🏃 Cách thức sử dụng
+## 🏃 How to Use
 
-Dự án có 2 chế độ: (1) Chạy web demo với mô hình đã huấn luyện, và (2) Tự huấn luyện lại mô hình.
+### 1. Run the Web App (Recommended)
 
-### 1. Chạy ứng dụng Web (Khuyến nghị)
-
-Mô hình đã được huấn luyện và lưu sẵn trong thư mục `model/food_classifier_model.keras`. Bạn chỉ cần chạy server Flask:
+The model is already trained and saved. You just need to run the Flask server:
 
 ```bash
 python app.py
 ```
 
-Sau khi server khởi động, mở trình duyệt và truy cập:
+Once the server is running, open your browser and go to:
 **[http://127.0.0.1:5000](http://127.0.0.1:5000)**
 
-Bạn có thể tải ảnh Phở, Bún, Cơm Tấm lên để xem kết quả dự đoán.
+### 2. (Optional) Re-train the Model
 
-### 2. (Tùy chọn) Huấn luyện lại mô hình
-
-Nếu bạn muốn tự huấn luyện lại mô hình từ dữ liệu thô trong `dataset_3_mon`, hãy chạy lệnh sau:
+If you want to train the model yourself using the data in `dataset_3_mon`, run:
 
 ```bash
 python train.py
 ```
 
-Quá trình này sẽ mất vài phút. Sau khi hoàn tất, một file mô hình mới sẽ được tạo và lưu đè vào `model/food_classifier_model.keras`.
-
----
-
-## 📊 Dataset
-
-* **Nguồn:** Dữ liệu được lấy từ [Kaggle: Vietnamese Foods](https://www.kaggle.com/datasets/quandang/vietnamese-foods).
-* **Tiền xử lý:**
-    * Chỉ chọn ra 3 lớp: `pho`, `comtam`.
-    * Lớp `bun` được gộp chung từ 3 thư mục: `bun bo hue`, `bun cha`, và `bun rieu` để tăng tính đa dạng và đơn giản hóa bài toán.
+This process will take a few minutes and will overwrite the existing `model/food_classifier_model.keras` file.
