@@ -1,7 +1,6 @@
-Flask
-Pillow
-gunicorn
+streamlit
 tensorflow-cpu
+Pillow
 numpy
 scikit-learn
 matplotlib
