@@ -87,6 +87,6 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 # --- 5. Chạy App ---
-if __name__ == '__main__':
+#if __name__ == '__main__':
     # Chạy ở chế độ debug để tự động khởi động lại khi có thay đổi
-    app.run(debug=True, port=5000)
+ #   app.run(debug=True, port=5000)

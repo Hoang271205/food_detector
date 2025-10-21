@@ -12,6 +12,7 @@ fonttools==4.60.1
 gast==0.6.0
 google-pasta==0.2.0
 grpcio==1.75.1
+gunicorn
 h5py==3.15.1
 idna==3.11
 itsdangerous==2.2.0
@@ -44,9 +45,7 @@ setuptools==80.9.0
 six==1.17.0
 tensorboard==2.16.2
 tensorboard-data-server==0.7.2
-tensorflow==2.16.2
-tensorflow-macos==2.16.2
-tensorflow-metal==1.2.0
+tensorflow-cpu
 termcolor==3.1.0
 threadpoolctl==3.6.0
 typing_extensions==4.15.0
